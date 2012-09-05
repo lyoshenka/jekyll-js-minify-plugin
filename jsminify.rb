@@ -4,23 +4,15 @@ require 'closure-compiler'
 
 module Jekyll
   module JsMinify
-
+    
     class MinJsFile < Jekyll::StaticFile
-
-      # Obtain destination path.
-      #   +dest+ is the String path to the destination dir
-      #
-      # Returns destination file path.
-      def destination(dest)
-        File.join(dest, @dir, @name.sub(/less$/, 'css'))
-      end
-
+      
       # Minify JS
       #   +dest+ is the String path to the destination dir
       #
       # Returns false if the file was not modified since last time (no-op).
       def write(dest)
-        dest_path = destination(dest)
+        dest_path = File.join(dest, @dir, @name)
         
         return false if File.exist? dest and !modified?
         @@mtimes[path] = mtime
